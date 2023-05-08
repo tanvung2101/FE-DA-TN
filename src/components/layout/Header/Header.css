@@ -1,0 +1,270 @@
+.speedDial {
+  position: fixed;
+  right: 3vmax;
+  top: 4vmax;
+}
+
+.speedDialIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+  z-index: 1001;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+body {
+  min-height: 100vh;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+}
+
+header {
+  height: auto;
+}
+
+header .logo img {
+  width: 162px;
+  height: 50px;
+  object-fit: cover;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 0px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+header .logo {
+  font-weight: bolder;
+  font-size: 25px;
+  color: #333;
+}
+
+
+header .navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .navbar ul li {
+  position: relative;
+  /* float: left; */
+}
+
+header .navbar ul li a {
+  font-size: 15px;
+  padding: 10px 20px;
+  color: #333;
+  display: block;
+}
+
+header .navbar ul li {
+  border-bottom: 4px;
+}
+
+header .navbar ul li:hover {
+  border-bottom: 4px solid #333;
+}
+
+/* header .navbar ul li ul {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  background: #fff;
+  display: none;
+} */
+
+/* header .navbar ul li ul li {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header .navbar ul li ul li ul {
+  left: 200px;
+  top: 0;
+} */
+
+/* header .navbar ul li:focus-within > ul,
+header .navbar ul li:hover > ul {
+  display: initial;
+} */
+
+#menu-bar {
+  display: none;
+}
+
+header label {
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  display: none;
+}
+
+@media(max-width: 600px) {
+  header a img {
+    display: none;
+  }
+
+  header {
+    padding: 10px;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 1000;
+  }
+
+  header label {
+    display: initial;
+    float: left;
+  }
+
+  header .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /* right: 0; */
+    background: #fff;
+    border-top: 1px solod rgba(0, 0, 0, 0.1);
+    display: none;
+    width: 100%;
+    z-index: 1000;
+    opacity: 1000;
+  }
+
+  header .navbar ul {
+    flex-direction: column;
+  }
+
+  header .navbar ul li {
+    width: 50%;
+  }
+
+  header .navbar ul li {
+    position: relative;
+    width: 100%;
+  }
+  header .navbar ul li {
+    border-bottom: 1px solid gray;
+  }
+  header .navbar ul li:hover {
+    border-bottom: 1px solid gray;
+  }
+  header .navbar ul li:last-child{
+    border-bottom: 0px;
+  }
+ 
+
+  #menu-bar:checked~.navbar {
+    transition: all;
+    display: initial;
+  }
+
+  .MuiBackdrop-root {
+    margin-top: 10px;
+  }
+}
+
+
+div.hiddenContent:hover+div.iconPhone {
+  opacity: 1;
+}
+
+.animate-scale:hover::before {
+  display: none;
+}
+
+.animate-scale::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  animation: ping 2s linear infinite;
+  border: 1px solid red;
+  transition: all 1s;
+}
+
+@keyframes ping {
+  from {
+    transform: scale(1);
+    opacity: 1;
+    border: 1px solid #1197f6;
+  }
+
+  16.5% {
+    transform: scale(1.20);
+    opacity: 1;
+    border: 1px solid #1197f6;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  33% {
+    transform: scale(1.20);
+    opacity: 1;
+    border: 1px solid transparent;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  49.5% {
+    transform: scale(1.35);
+    opacity: 1;
+    border: 1px solid #1197f6;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  66% {
+    transform: scale(1.35);
+    opacity: 1;
+    border: 1px solid white;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  88.5% {
+    transform: scale(1.50);
+    opacity: 1;
+    border: 1px solid #1197f6;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: scale(1.50);
+    opacity: 1;
+    border: 1px solid white;
+
+    transition-timing-function: ease-in-out;
+  }
+
+  /* 87.5% {
+    transform: scale(1.65);
+    opacity: 1;
+    border: 1px solid red;
+   
+    transition-timing-function: ease-in-out;
+  } */
+}
