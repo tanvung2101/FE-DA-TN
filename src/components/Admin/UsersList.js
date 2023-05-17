@@ -11,10 +11,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
+import Swal from "sweetalert2";
 
 const UsersList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const alert = useAlert();
 
   const { error, users } = useSelector((state) => state.allUsers);
@@ -26,7 +27,20 @@ const UsersList = () => {
   } = useSelector((state) => state.profile);
 
   const deleteUserHandler = (id) => {
-    dispatch(deleteUser(id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUser(id));
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
   };
 
   useEffect(() => {

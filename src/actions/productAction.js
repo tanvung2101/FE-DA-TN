@@ -33,7 +33,7 @@ import {
 
 // Get All Products
 export const getProduct =
-  (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) =>
+  (keyword = "", currentPage = 2, price = [0, 25000], category, ratings = 0) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
@@ -45,6 +45,7 @@ export const getProduct =
       }
 
       const { data } = await axios.get(link);
+      console.log(data)
 
       dispatch({
         type: ALL_PRODUCT_SUCCESS,

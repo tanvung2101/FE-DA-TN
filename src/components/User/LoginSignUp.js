@@ -47,28 +47,7 @@ const LoginSignUp = () => {
   );
 
   const loginTab = useRef(null);
-  // const registerTab = useRef(null);
-  // const switcherTab = useRef(null);
-
-  // const [loginEmail, setLoginEmail] = useState("");
-  // const [loginPassword, setLoginPassword] = useState("");
-
-  // const [user, setUser] = useState({
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  // });
-
-  // const { name, email, password } = user;
-  // let ErrorName = '';
-  // let ErrorEmail = '';
-  // let ErrorPassword = ''
-
-  // const [avatar, setAvatar] = useState(profile);
-  // const [avatarPreview, setAvatarPreview] = useState(profile);
-
   const loginSubmit = (e) => {
-    // e.preventDefault();
     dispatch(login(e.email, e.password));
   };
 
@@ -141,11 +120,9 @@ const LoginSignUp = () => {
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
               <div className="mt-5">
-                {/* <div className="login_signUp_toggle"> */}
                 <p className="text-center text-lg text-black-400 font-semibold font-sans">
                   LOGIN
                 </p>
-                {/* </div> */}
               </div>
               <form
                 className="loginForm"
@@ -164,7 +141,7 @@ const LoginSignUp = () => {
                       // onChange={(e) => setLoginEmail(e.target.value)}
                       {...register("email")}
                       autoComplete="off"
-                      className=""
+                      className="lowercase"
                     />
                   </div>
                   <span className="text-[12px] font-sans font-medium text-red-400">
@@ -220,74 +197,5 @@ const LoginSignUp = () => {
 
 export default LoginSignUp;
 
-/*
-<form
-                className="signUpForm"
-                ref={registerTab}
-                encType="multipart/form-data"
-                onSubmit={registerSubmit}
-                autoComplete="off"
-              >
-                <div className="signUpName mb-2">
-                  <FaceIcon />
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    // required
-                    name="name"
-                    value={name}
-                    onChange={registerDataChange}
-                    autoComplete="off"
-                  />
-                </div>
-                <div className="signUpEmail mb-2">
-                  <MailOutlineIcon />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    // required
-                    name="email"
-                    value={email}
-                    onChange={registerDataChange}
-                    autoComplete="off"
-                  />
-                </div>
-                <div className="signUpPassword relative mb-2">
-                  <LockOpenIcon />
-                  <input
-                    type={showHiddenPassword ? "password" : "text"}
-                    placeholder="Password"
-                    // required
-                    name="password"
-                    value={password}
-                    onChange={registerDataChange}
-                    autoComplete="off"
-                  />
-                  <span
-                    className="absolute right-0 -translate-x-[100%]"
-                    onClick={() => setShowHiddenPassword(!showHiddenPassword)}
-                  >
-                    {showHiddenPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
-                      <AiOutlineEye />
-                    )}
-                  </span>
-                </div>
 
-                <div id="registerImage">
-                  <img src={avatarPreview} alt="Avatar Preview" />
-                  <input
-                    type="file"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={registerDataChange}
-                    autoComplete="off"
-                  />
-                </div>
-                <input type="submit" value="Register" className="signUpBtn" autoComplete="off"/>
-                {/* <button type="submit" className="signUpBtn">
-                  Register
-                </button> 
-                </form>
-*/
+

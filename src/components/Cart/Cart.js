@@ -6,9 +6,10 @@ import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
 import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Cart = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
@@ -30,15 +31,28 @@ const Cart = () => {
   };
 
   const deleteCartItems = (id) => {
-    dispatch(removeItemsFromCart(id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        dispatch(removeItemsFromCart(id));
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
   };
 
   const checkoutHandler = () => {
-    if(user){
-      navigate("/shipping")
-    }else{
-      navigate("/login")
-    };
+    if (user) {
+      navigate("/shipping");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (

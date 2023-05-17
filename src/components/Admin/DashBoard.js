@@ -70,7 +70,7 @@ const DashBoard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 50000000],
+        data: [0, 2000],
       },
     ],
   };
@@ -90,7 +90,6 @@ const DashBoard = () => {
     <div className="dashboard">
       <MetaData title="Dashboard - Admin Panel" />
       <Sidebar />
-
       <div className="dashboardContainer">
         <Typography component="h1">Dashboard</Typography>
 

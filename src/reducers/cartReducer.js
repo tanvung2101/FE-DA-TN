@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
   ADD_TO_CART,
   REMOVE_CART_ITEM,
@@ -8,7 +9,7 @@ export const cartReducer = (state = { cartItems: [], shippingInfo: {} }, action)
   switch (action.type) {
     case ADD_TO_CART:
       const item = action.payload;
-
+    
       const isItemExist = state.cartItems.find(
         (i) => i.product === item.product
       );

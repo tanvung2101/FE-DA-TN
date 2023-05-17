@@ -1,21 +1,33 @@
-import { CiAlarmOn } from "react-icons/ci";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, Suspense } from "react";
 import "./Home.css";
 import MetaData from "../layout/MetaData";
 import { clearErrors, getProduct } from "../../actions/productAction";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import ProductCard from "./ProductCard.js";
 import Slider from "react-slick";
 import { GrPrevious, GrNext } from "react-icons/gr";
+import useSWR from "swr";
+import asus from "../../images/images_ads_2023Banners_May_05_15_2023_GF_RTX_Ulitmate_Play_MC_Overwatch2_Ecosystem_hero.jpg";
+import itel from "../../images/images_ads_2023Banners_May_546465_ASUS_Hero.jpg";
+import lenavo from "../../images/images_ads_2023Banners_May_0512_LenovoIdeaPad570226SK.png";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+const images = [
+  { id: 1, image: asus },
+  { id: 2, image: itel },
+  { id: 3, image: lenavo },
+];
 
 const Home = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state.products);
-  console.log(products);
-
+  const { data, error, isLoading } = useSWR(
+    "http://localhost:4000/api/v1/products",
+    fetcher
+  );
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -71,85 +83,48 @@ const Home = () => {
   };
 
   return (
-    <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <MetaData title="ECOMMERCE" />
+    <Suspense fallback={<Loader />}>
+      <Fragment>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Fragment>
+            <MetaData title="ECOMMERCE" />
 
-          <div className="banner">
-            {/* <p>Welcome to Ecommerce</p>
-            <h1>FIND AMAZING PRODUCTS BELOW</h1> */}
-
-            {/* <a className="bg-transparent" href="#container">
-              <button className="bg-transparent flex items-center justify-center gap-5">
-                Scroll <CiAlarmOn />
-              </button>
-            </a> */}
-            <div className="w-full h-full mt-0">
-              <Slider {...settings}>
-                {products &&
-                  products.map((item) => (
-                    <div key={item._id} className="w-full h-full">
-                      <img
-                        src={item.images[0].url}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                {/* <div className="w-full h-full">
-                  <img
-                    src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/TGDD--Desk--deal-ngon-1200x120.png"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-full h-full">
-                  <img
-                    src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/Realme-C55-GRQ-720-220-720x220-2.png"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-full h-full">
-                  <img
-                    src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/TGDD--Desk--deal-ngon-1200x120.png"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-full h-full">
-                  <img
-                    src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/Realme-C55-GRQ-720-220-720x220-2.png"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-full h-full">
-                  <img
-                    src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/TGDD--Desk--deal-ngon-1200x120.png"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div> */}
-              </Slider>
+            <div className="banner">
+              <div className="px-10 mt-2 w-full max-h-[600px]">
+                <Slider {...settings}>
+                  {images &&
+                    images?.map((item) => (
+                      <div key={item.id} className="w-full h-full">
+                        <img
+                          src={item.image}
+                          alt=""
+                          className="w-full max-h-[600px] object-fill max-sm:h-full"
+                        />
+                      </div>
+                    ))}
+                </Slider>
+              </div>
             </div>
-          </div>
 
-          <h2 className="homeHeading">Featured Products</h2>
+            <h2 className="homeHeading">Featured Products</h2>
 
-          {/* <div className="container" id="container"> */}
-          <div className="w-[80%] mx-auto grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-            {products &&
-              products.map((product) => (
-                <ProductCard className='' key={product._id} product={product} />
-              ))}
-          </div>
-        </Fragment>
-      )}
-    </Fragment>
+            {/* <div className="container" id="container"> */}
+            <div className="w-[80%] mx-auto grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
+              {data?.products &&
+                data?.products.map((product) => (
+                  <ProductCard
+                    className=""
+                    key={product._id}
+                    product={product}
+                  />
+                ))}
+            </div>
+          </Fragment>
+        )}
+      </Fragment>
+    </Suspense>
   );
 };
 

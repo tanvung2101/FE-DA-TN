@@ -21,7 +21,9 @@ import {
   Button,
 } from "@material-ui/core";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
-import Slider from "react-slick";
+// import Slider from "react-slick";
+import Carousel from "react-material-ui-carousel";
+import { GrNext, GrPrevious } from "react-icons/gr";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -30,7 +32,7 @@ const ProductDetails = () => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
-
+console.log(product)
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
@@ -62,8 +64,12 @@ const ProductDetails = () => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(id, quantity));
+    if(product?.Stock === 0){
+    return alert.success("This product is currently out of stock");
+    }else{
+      dispatch(addItemsToCart(id, quantity));
     alert.success("Item Added To Cart");
+    }
   };
 
   const submitReviewToggle = () => {
@@ -99,6 +105,17 @@ const ProductDetails = () => {
     }
     dispatch(getProductDetails(id));
   }, [alert, dispatch, error, id, reviewError, success]);
+
+  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
+    <div {...props}>
+      <GrPrevious className="text-lg z-50 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"></GrPrevious>
+    </div>
+  );
+  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
+    <div {...props}>
+      <GrNext className="text-lg z-50 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"></GrNext>
+    </div>
+  );
   const settings = {
     dots: true,
     infinite: true,
@@ -106,11 +123,37 @@ const ProductDetails = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+    prevArrow: <SlickArrowLeft />,
+    nextArrow: <SlickArrowRight />,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          infinite: false,
+          arrows: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          infinite: false,
+          arrows: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+        },
+      },
+    ],
   };
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    window.scroll(0, 0);
+  }, []);
   return (
     <Fragment>
       {loading ? (
@@ -118,20 +161,10 @@ const ProductDetails = () => {
       ) : (
         <Fragment>
           <MetaData title={`${product?.name} -- ECOMMERCE`} />
-          <div className="ProductDetails">
-            <div>
-              {/* <Carousel>
-                {product?.images &&
-                  product?.images.map((item, i) => (
-                    <img
-                      className="CarouselImage"
-                      key={i}
-                      src={item.url}
-                      alt={`${i} Slide`}
-                    />
-                  ))}
-              </Carousel> */}
-              <Slider {...settings}>
+          <div className="ProductDetails max-[769px]:flex-col"
+          >
+            <div className="max-w-[800px] max-lg:w-[600px]">
+              {/* <Slider {...settings}>
                 {product?.images &&
                   product?.images.map((item, i) => (
                     <div key={i}>
@@ -142,9 +175,19 @@ const ProductDetails = () => {
                       />
                     </div>
                   ))}
-              </Slider>
+              </Slider> */}
+               <Carousel>
+                {product.images &&
+                  product.images.map((item, i) => (
+                    <img
+                      className="CarouselImage"
+                      key={i}
+                      src={item.url}
+                      alt={`${i} Slide`}
+                    />
+                  ))}
+              </Carousel>
             </div>
-
             <div className="detailsBlock">
               <div className="detailsBlock-1">
                 <h2>{product?.name}</h2>
@@ -157,7 +200,10 @@ const ProductDetails = () => {
                 </span>
               </div>
               <div className="detailsBlock-3">
-                <h1>{`${(product?.price)?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}`}</h1>
+                <h1>{`${product?.price?.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
@@ -165,7 +211,7 @@ const ProductDetails = () => {
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
-                    disabled={product?.Stock < 1 ? true : false}
+                    // disabled={product?.Stock < 1 ? true : false}
                     onClick={addToCartHandler}
                   >
                     Add to Cart

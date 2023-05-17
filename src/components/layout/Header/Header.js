@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../actions/userAction";
 import Vehicle from "./Vehicle";
 import { IoIosAdd } from "react-icons/io";
+import MetaData from "../MetaData";
 
 // const options = {
 //   burgerColorHover: "#eb4034",
@@ -56,6 +57,7 @@ const Header = () => {
   // if(!user) return <div></div>
   return (
     <header className="bg-[#f7f8f9]">
+      <MetaData></MetaData>
       <div className="w-16 max-sm:hidden">
         <Link to="/" className="logo">
           <img src={logo} alt="" />

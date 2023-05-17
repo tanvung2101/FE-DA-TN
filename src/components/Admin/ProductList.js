@@ -11,6 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import Swal from "sweetalert2";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,21 @@ const ProductList = () => {
   );
 
   const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteProduct(id));
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+    
   };
 
   useEffect(() => {

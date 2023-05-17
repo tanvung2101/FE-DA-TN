@@ -84,7 +84,7 @@ function App() {
     try {
       
       const { data } = await axios.get("/api/v1/stripeapikey");
-      setStripeApiKey(data.stripeApiKey);
+      setStripeApiKey(data?.stripeApiKey);
     } catch (error) {
         console.log(error)
     }
@@ -94,7 +94,7 @@ function App() {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Roboto", "Droid Sans", "Chilanka"],
+        families: ["Roboto",],
       },
     });
 

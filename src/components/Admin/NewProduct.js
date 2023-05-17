@@ -169,9 +169,13 @@ const NewProduct = () => {
             </div>
 
             <div id="createProductFormImage">
-              {imagesPreview.map((image, index) => (
-                <img key={index} src={image} alt="Product Preview" />
-              ))}
+              {imagesPreview.map((image, index) => {
+                console.log(image)
+                return (
+                  <img key={index} src={image} alt="Product Preview" />
+                )
+              }
+              )}
             </div>
 
             <Button

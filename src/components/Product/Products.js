@@ -10,6 +10,7 @@ import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 import MetaData from "../layout/MetaData";
 import { useParams } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
 const categories = [
   "Dell",
@@ -30,6 +31,7 @@ const Products = () => {
   const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
+  console.log(currentPage);
   const [price, setPrice] = useState([0, 50000000]);
   const [category, setCategory] = useState("");
 
@@ -43,6 +45,7 @@ const Products = () => {
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.products);
+  console.log("resultPerPage", resultPerPage);
 
   console.log(products);
 
@@ -54,6 +57,7 @@ const Products = () => {
     setPrice(newPrice);
   };
   let count = filteredProductsCount;
+  console.log("count", count);
 
   useEffect(() => {
     if (error) {
@@ -86,7 +90,7 @@ const Products = () => {
               />
 
               <Typography>Categories</Typography>
-              <ul className="categoryBox">
+              <ul className="categoryBox min-w-[250px]">
                 {categories.map((category) => (
                   <li
                     className="category-link pb-2 border-b-[1px] border-b-slate-400"
@@ -96,6 +100,13 @@ const Products = () => {
                     {category}
                   </li>
                 ))}
+                <li
+                  className="flex item-center gap-1 text-black py-1 cursor-pointer"
+                  onClick={() => setCategory("")}
+                >
+                  <AiOutlineClose className="text-center text-black mt-1"></AiOutlineClose>
+                  <span className="text-center">clear filter</span>
+                </li>
               </ul>
 
               <fieldset>
@@ -114,10 +125,17 @@ const Products = () => {
             </div>
 
             <div className="products mx-auto">
-              <div className="flex gap-10 max-md:flex-wrap max-sm:flex-col">
+              <div
+                // className="grid grid-cols-3 gap-10"
+                className="mx-auto flex gap-10 flex-wrap justify-center max-md:flex-wrap max-sm:flex-col"
+              >
                 {products &&
                   products.map((product) => (
-                    <ProductCard className="" key={product._id} product={product} />
+                    <ProductCard
+                      className=""
+                      key={product._id}
+                      product={product}
+                    />
                   ))}
               </div>
             </div>
